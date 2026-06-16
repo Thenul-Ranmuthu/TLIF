@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: tlif
+  datasource:
+    url: jdbc:postgresql://172.30.113.63:5432/tlif
+    username: postgres
+    password: t123
+    driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      client:
+        provider:
+          azure:
+            authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+            token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            jwk-set-uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
+            user-info-uri: https://graph.microsoft.com/oidc/userinfo
+            user-name-attribute: sub
+        registration:
+          azure-dev:
+            provider: azure
+            client-id: 0fc90624-be62-4386-aa90-35fe5ac5f18c
+            client-secret: REMOVED
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+            - openid
+            - email
+            - profile
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 5050
+app:
+  cors:
+    allowed-origins: http://localhost:3000
+  # jwt:
+  #   secret: N2YzNTI4ZDc0YWEzZmQzOGE4MWFkZTQxMDMxOWY2MjIxOWVkOGM2Y2YxNWU5MWM0YzEwYzAwZjA5Yjc0MTg4NA==
