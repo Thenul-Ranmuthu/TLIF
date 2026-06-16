@@ -2,3 +2,4 @@ frontend/tlif/node_modules
 frontend/tlif/.next
 backend/tlif/target
 backend/tlif/src/main/resources/application.yml
+backend/tlif/src/main/resources/application.yaml
