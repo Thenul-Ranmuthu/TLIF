@@ -45,7 +45,7 @@ export default function Dashboard({ grantees }: DashboardProps) {
       <div className="scroll-body">
         {/* Alert */}
         <div className="alert">
-          <AlertTriangle size={17} className="flex-shrink-0" style={{ color: "var(--amber)" }} />
+          <AlertTriangle size={17} className="shrink-0" style={{ color: "var(--amber)" }} />
           <div className="alert-text">
             <b>Deadline approaching —</b> Grantees must utilise funds by January 31st.{" "}
             {lowUtil} grantees are below 50% utilisation.

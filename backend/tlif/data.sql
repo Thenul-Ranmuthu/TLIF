@@ -1,7 +1,6 @@
--- PostgreSQL seed file aligned to Java entities
 -- Run with: psql -d <db> -f backend/tlif/data.sql
 
--- Drop tables if they exist (safe for development reset)
+-- Drop tables if they exist 
 DROP TABLE IF EXISTS scoring_records CASCADE;
 DROP TABLE IF EXISTS progress_reports CASCADE;
 DROP TABLE IF EXISTS receipts CASCADE;
@@ -9,7 +8,7 @@ DROP TABLE IF EXISTS budget_categories CASCADE;
 DROP TABLE IF EXISTS applicants CASCADE;
 DROP TABLE IF EXISTS grantees CASCADE;
 
--- Grantees (matches com.tlif.tlif.entity.Grantee)
+-- Grantees 
 CREATE TABLE grantees (
   id BIGSERIAL PRIMARY KEY,
   name TEXT NOT NULL,
@@ -19,7 +18,7 @@ CREATE TABLE grantees (
   amount_allocated BIGINT NOT NULL
 );
 
--- Applicants (matches com.tlif.tlif.entity.Applicant)
+-- Applicants 
 CREATE TABLE applicants (
   id BIGSERIAL PRIMARY KEY,
   name TEXT NOT NULL,
@@ -30,7 +29,7 @@ CREATE TABLE applicants (
   amount_requested BIGINT NOT NULL
 );
 
--- Budget categories (matches BudgetCategory)
+-- Budget categories 
 CREATE TABLE budget_categories (
   id BIGSERIAL PRIMARY KEY,
   grantee_id BIGINT NOT NULL REFERENCES grantees(id) ON DELETE CASCADE,
@@ -40,7 +39,7 @@ CREATE TABLE budget_categories (
   amount_spent BIGINT NOT NULL DEFAULT 0
 );
 
--- Receipts (matches Receipt)
+-- Receipts 
 CREATE TABLE receipts (
   id BIGSERIAL PRIMARY KEY,
   receipt_code VARCHAR(64) NOT NULL UNIQUE,
@@ -55,7 +54,7 @@ CREATE TABLE receipts (
   comment TEXT
 );
 
--- Progress reports (matches ProgressReport -> progress_reports table in entity)
+-- Progress reports 
 CREATE TABLE progress_reports (
   id BIGSERIAL PRIMARY KEY,
   grantee_id BIGINT NOT NULL REFERENCES grantees(id) ON DELETE CASCADE,
@@ -65,7 +64,7 @@ CREATE TABLE progress_reports (
   status VARCHAR(16) NOT NULL
 );
 
--- Scoring records (matches ScoringRecord -> scoring_records)
+-- Scoring records 
 CREATE TABLE scoring_records (
   id BIGSERIAL PRIMARY KEY,
   applicant_id BIGINT NOT NULL UNIQUE REFERENCES applicants(id) ON DELETE CASCADE,
@@ -88,7 +87,7 @@ INSERT INTO grantees (name, faculty, email, research_title, amount_allocated) VA
 ('Ms. M. Rajapaksha', 'Computing', 'm.rajapaksha@sliit.lk', 'Adaptive Feedback Systems', 200000)
 ;
 
--- Seed applicants (map to the applicants entity)
+-- Seed applicants 
 INSERT INTO applicants (name, faculty, email, research_title, status, amount_requested) VALUES
 ('Dr. D. Wickramasinghe', 'Computing', 'd.wickramasinghe@sliit.lk', 'AI-Enhanced Blended Learning', 'SELECTED', 280000),
 ('Prof. K. Perera', 'Engineering', 'k.perera@sliit.lk', 'PBL Curriculum Redesign', 'SELECTED', 320000),
@@ -158,7 +157,7 @@ INSERT INTO progress_reports (grantee_id, quarter, due_date, submitted_date, sta
 ((SELECT id FROM grantees WHERE email='m.rajapaksha@sliit.lk'),'Q2','2025-01-31',NULL,'UPCOMING')
 ;
 
--- Seed scoring_records (map previous scores to applicants)
+-- Seed scoring_records 
 -- We assume applicants were inserted and can be matched by email
 INSERT INTO scoring_records (applicant_id, alignment, contribution, innovation, outcomes, budget, stakeholders, students, total_score) VALUES
 ((SELECT id FROM applicants WHERE email='d.wickramasinghe@sliit.lk'), 3,3,4,3,3,4,3, 78),
@@ -176,7 +175,7 @@ ALTER TABLE applicants
 -- ALTER TABLE applicants ADD CONSTRAINT fk_applicant_linked_grantee FOREIGN KEY (linked_grantee_id) REFERENCES grantees(id) ON DELETE SET NULL;
 
 -- End of seed
--- PostgreSQL-compatible seed file for TLIF (grantees, budget_categories, receipts, reports, applicants, scores)
+
 
 
 

@@ -1,5 +1,7 @@
 package com.tlif.tlif.entity;
 
+import com.tlif.tlif.Enums.UserRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,6 +48,9 @@ public class Applicant {
 
     @Column (nullable = false)
     private Long amountRequested;
+
+    @Column
+    private Long linkedGranteeId;
 
     public enum ApplicationStatus {
         PENDING, SELECTED, REJECTED

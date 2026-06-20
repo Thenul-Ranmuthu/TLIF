@@ -38,9 +38,6 @@ export default function Grantees({ grantees, onUpdateGrantee, initialSelectedId}
           {selected && (
             <span className="pill pill-green">Viewing: {selected.name}</span>
           )}
-          <button style={{ marginLeft: 8 }} className="btn">
-            Register Grantee
-          </button>
         </div>
       </div>
 

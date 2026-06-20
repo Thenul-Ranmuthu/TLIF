@@ -10,4 +10,5 @@ public interface GranteeRepository extends JpaRepository<Grantee, Long>{
     
     Optional<Grantee> findByEmail(String email);
     List<Grantee> findByNameContainingIgnoreCaseOrFacultyContainingIgnoreCase(String name, String faculty);
+    boolean existsByEmail(String email);
 }

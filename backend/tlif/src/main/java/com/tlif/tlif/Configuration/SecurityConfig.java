@@ -32,7 +32,8 @@ public class SecurityConfig {
             .csrf(csrf-> csrf.disable())
             .authorizeHttpRequests(auth->
                 auth
-                    .requestMatchers("/home", "/login/**","/oath2/**", "/error").permitAll()
+                    // Allow unauthenticated access to static pages, login, OAuth endpoints and API during local development
+                    .requestMatchers("/home", "/login/**", "/oauth2/**", "/error", "/api/**").permitAll()
                     .anyRequest().authenticated()
             )
             .oauth2Login(oauth2-> oauth2
