@@ -16,7 +16,7 @@ interface NavItem {
   badge?: number;
 }
 
-const NAV_GROUPS = [
+const NAV_GROUPS = (applicantCount: number) => [
   {
     label: "Overview",
     items: [
@@ -26,7 +26,7 @@ const NAV_GROUPS = [
   {
     label: "Applications",
     items: [
-      { id: "apps" as View, label: "Applications", icon: <FileText size={16} />, badge: 10 },
+      { id: "apps" as View, label: "Applications", icon: <FileText size={16} />, badge: applicantCount },
       { id: "score" as View, label: "Scoring & Ranking", icon: <Star size={16} /> },
     ],
   },
@@ -47,9 +47,11 @@ const NAV_GROUPS = [
 interface SidebarProps {
   activeView: View;
   onNavigate: (view: View) => void;
+  noApplicants: number;
 }
 
-export default function Sidebar({ activeView, onNavigate }: SidebarProps) {
+export default function Sidebar({ activeView, onNavigate, noApplicants = 0 }: SidebarProps) {
+  const navGroups = NAV_GROUPS(noApplicants);
   return (
     <aside className="sidebar">
       {/* Logo */}
@@ -63,7 +65,7 @@ export default function Sidebar({ activeView, onNavigate }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="nav">
-        {NAV_GROUPS.map((group) => (
+        {navGroups.map((group) => (
           <div key={group.label}>
             <div className="nav-group">{group.label}</div>
             {group.items.map((item) => (

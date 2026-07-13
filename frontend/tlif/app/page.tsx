@@ -48,6 +48,7 @@ function mapGranteeResponse(raw: any): Grantee {
   };
 }
 
+
 export default function Home() {
   const [activeView, setActiveView] = useState<View>("dash");
   const [grantees, setGrantees] = useState<Grantee[]>([]);
@@ -55,6 +56,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [initialGranteeId, setInitialGranteeId] = useState<number | null>(null);
+  const [noApplicants, setNoApplicants] = useState<number>(0);
 
   // ── Load initial data ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -69,6 +71,7 @@ export default function Home() {
         const [gData, aData] = await Promise.all([gRes.json(), aRes.json()]);
         setGrantees((gData as any[]).map(mapGranteeResponse));
         setApplicants(aData);
+        setNoApplicants(aData.length)
       } catch (e: any) {
         setError(e?.message ?? "Unknown error");
       } finally {
@@ -152,7 +155,7 @@ export default function Home() {
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="shell">
-      <Sidebar activeView={activeView} onNavigate={handleNavigate} />
+      <Sidebar activeView={activeView} onNavigate={handleNavigate} noApplicants={noApplicants}/>
       <div className="main">
         {activeView === "dash" && <Dashboard grantees={grantees} />}
         {activeView === "apps" && (
