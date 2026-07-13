@@ -50,7 +50,7 @@ interface SidebarProps {
   noApplicants: number;
 }
 
-export default function Sidebar({ activeView, onNavigate, noApplicants = 0 }: SidebarProps) {
+export default function Sidebar({ activeView, onNavigate, noApplicants }: SidebarProps) {
   const navGroups = NAV_GROUPS(noApplicants);
   return (
     <aside className="sidebar">

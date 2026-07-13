@@ -157,7 +157,7 @@ export default function Home() {
     <div className="shell">
       <Sidebar activeView={activeView} onNavigate={handleNavigate} noApplicants={noApplicants}/>
       <div className="main">
-        {activeView === "dash" && <Dashboard grantees={grantees} />}
+        {activeView === "dash" && <Dashboard grantees={grantees} noApplicants={noApplicants}/>}
         {activeView === "apps" && (
           <Applications
             applicants={applicants}

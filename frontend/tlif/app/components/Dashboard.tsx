@@ -5,9 +5,10 @@ import { Bell, Mail, AlertTriangle, FileText, Users, TrendingUp, Wallet, Check, 
 
 interface DashboardProps {
   grantees: Grantee[];
+  noApplicants: number;
 }
 
-export default function Dashboard({ grantees }: DashboardProps) {
+export default function Dashboard({ grantees, noApplicants }: DashboardProps) {
   const totalAllocated = grantees.reduce((a, g) => a + g.amountAllocated, 0);
   const totalSpentAll = grantees.reduce(
     (a, g) => a + g.budgetCats.reduce((b, c) => b + c.amountSpent, 0),
@@ -63,7 +64,7 @@ export default function Dashboard({ grantees }: DashboardProps) {
             <div className="kpi-icon" style={{ background: "var(--navy-bg)", color: "var(--navy2)" }}>
               <FileText size={16} />
             </div>
-            <div className="kpi-val">10</div>
+            <div className="kpi-val">{noApplicants}</div>
             <div className="kpi-lbl">Applications</div>
             <div className="kpi-sub">5 selected · 1 rejected</div>
           </div>
