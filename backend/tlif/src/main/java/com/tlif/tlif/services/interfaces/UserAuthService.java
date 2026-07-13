@@ -1,11 +1,11 @@
-package com.tlif.tlif.services.interfaces;
+// package com.tlif.tlif.services.interfaces;
 
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 
-import com.tlif.tlif.dto.UserLoginResponseDto;
+// import com.tlif.tlif.dto.UserLoginResponseDto;
 
-import jakarta.servlet.http.HttpSession;
+// import jakarta.servlet.http.HttpSession;
 
-public interface UserAuthService {
-    public ResponseEntity<UserLoginResponseDto> userLogin(HttpSession session);
-}
+// public interface UserAuthService {
+//     public ResponseEntity<UserLoginResponseDto> userLogin(HttpSession session);
+// }
