@@ -49,7 +49,7 @@ export interface Applicant {
   researchTitle: string;
   amountRequested: number;
   score: number;
-  status: "Selected" | "Rejected" | "Shortlisted" | "Pending";
+  status: "SELECTED" | "REJECTED" | "PENDING";
   linkedGranteeId?: number | null;
 }
 

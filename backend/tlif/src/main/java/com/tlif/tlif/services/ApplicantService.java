@@ -81,6 +81,9 @@ public class ApplicantService {
             userRepository.save(user);
         });
 
+        applicant.setLinkedGranteeId(grantee.getId());
+        applicantRepository.save(applicant);
+
         return buildGranteeResponse(grantee);
 
     }
@@ -94,6 +97,7 @@ public class ApplicantService {
                 .researchTitle(a.getResearchTitle())
                 .amountRequested(a.getAmountRequested())
                 .status(a.getStatus())
+                .linkedGranteeId(a.getLinkedGranteeId())
                 .build();
     }
  
@@ -106,6 +110,7 @@ public class ApplicantService {
                 .researchTitle(a.getResearchTitle())
                 .amountRequested(a.getAmountRequested())
                 .status(ApplicantDto.Response.ApplicationStatus.valueOf(a.getStatus().name()))
+                .linkedGranteeId(a.getLinkedGranteeId())
                 .build();
     }
  

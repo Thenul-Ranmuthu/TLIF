@@ -71,7 +71,7 @@ export default function Applications({
                   <div className="g-meta">
                     <span
                       className={`pill ${
-                        app.status === "Selected" ? "pill-green" : "pill-red"
+                        app.status === "SELECTED" ? "pill-green" : "pill-red"
                       }`}
                     >
                       {app.status}

@@ -60,7 +60,7 @@ export default function ApplicantDetail({
     );
   }
 
-  const isSelected = applicant.status === "Selected";
+  const isSelected = applicant.status === "SELECTED";
   const alreadyGrantee = applicant.linkedGranteeId != null;
 
   return (
@@ -133,9 +133,9 @@ export default function ApplicantDetail({
                 style={{
                   fontWeight: 700,
                   color:
-                    applicant.status === "Selected"
+                    applicant.status === "SELECTED"
                       ? "var(--green, #22c55e)"
-                      : applicant.status === "Rejected"
+                      : applicant.status === "REJECTED"
                       ? "var(--red, #ef4444)"
                       : "inherit",
                 }}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { View, Grantee, Applicant } from "./types";
+import { View, Grantee, Applicant, Receipt } from "./types";
 import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
@@ -9,6 +9,44 @@ import Applications from "./components/Applications";
 import Scoring from "./components/Scoring";
 import Grantees from "./components/Grantees";
 import EmailCenter from "./components/EmailCenter";
+
+function mapGranteeResponse(raw: any): Grantee {
+  return {
+    id: raw.id,
+    name: raw.name,
+    faculty: raw.faculty,
+    email: raw.email,
+    researchTitle: raw.researchTitle,
+    
+    status: "Selected",
+    amountAllocated: raw.amountAllocated,
+    
+    amountRequested: raw.amountAllocated,
+    budgetCats: (raw.budgetCategories ?? []).map((c: any) => ({
+      categoryName: c.categoryName,
+      amountRequested: c.amountRequested,
+      amountApproved: c.amountApproved,
+      amountSpent: c.amountSpent,
+    })),
+    receipts: (raw.receipts ?? []).map((r: any) => ({
+      id: String(r.id),
+      categoryName: r.categoryName,
+      description: r.description,
+      amountClaimed: r.amountClaimed,
+      status: String(r.status).toLowerCase() as Receipt["status"],
+      uploadedDate: r.uploadedDate,
+      amountApproved: r.amountApproved,
+      approvedBy: r.approvedBy,
+      comment: r.comment,
+    })),
+    reports: (raw.progressReports ?? []).map((r: any) => ({
+      quarter: r.quarter,
+      dueDate: r.dueDate,
+      submittedDate: r.submittedDate,
+      status: r.submittedDate ? "submitted" : r.isOverdue ? "overdue" : "upcoming",
+    })),
+  };
+}
 
 export default function Home() {
   const [activeView, setActiveView] = useState<View>("dash");
@@ -29,7 +67,7 @@ export default function Home() {
         ]);
         if (!gRes.ok || !aRes.ok) throw new Error("Failed to fetch data");
         const [gData, aData] = await Promise.all([gRes.json(), aRes.json()]);
-        setGrantees(gData);
+        setGrantees((gData as any[]).map(mapGranteeResponse));
         setApplicants(aData);
       } catch (e: any) {
         setError(e?.message ?? "Unknown error");
@@ -96,23 +134,9 @@ export default function Home() {
       throw new Error(body?.message ?? `Promotion failed (HTTP ${res.status})`);
     }
 
-    // The backend returns a GranteeDto.Response
+    // The backend returns a GranteeDto.Response — map it to the frontend shape
     const newGranteeRaw = await res.json();
-
-    // Map backend response to the frontend Grantee shape
-    const newGrantee: Grantee = {
-      id: newGranteeRaw.id,
-      name: newGranteeRaw.name,
-      faculty: newGranteeRaw.faculty,
-      email: newGranteeRaw.email,
-      researchTitle: newGranteeRaw.researchTitle,
-      status: "Selected",
-      amountAllocated: newGranteeRaw.amountAllocated,
-      amountRequested: newGranteeRaw.amountAllocated, // best we have client-side
-      budgetCats: [],
-      receipts: [],
-      reports: [],
-    };
+    const newGrantee: Grantee = mapGranteeResponse(newGranteeRaw);
 
     // 1. Add grantee to state
     setGrantees((prev) => [newGrantee, ...prev]);

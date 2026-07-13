@@ -43,6 +43,7 @@ public class ApplicantDto {
           private String researchTitle;
           private Long amountRequested;
           private ApplicationStatus status;
+          private Long linkedGranteeId;
 
           public enum ApplicationStatus {
             PENDING, SELECTED, REJECTED
@@ -63,5 +64,6 @@ public class ApplicantDto {
         private Long amountRequested;
         private ApplicationStatus status;
         private Integer scoreTotal;
+        private Long linkedGranteeId;
     }
 }
