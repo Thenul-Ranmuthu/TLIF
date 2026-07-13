@@ -1,5 +1,9 @@
 frontend/tlif/node_modules
 frontend/tlif/.next
 backend/tlif/target
+<<<<<<< HEAD
 backend/tlif/src/main/resources/application.yml
 backend/tlif/src/main/resources/application.yaml
+=======
+backend/tlif/src/main/resources/application.yaml
+>>>>>>> 3d552a6 (fix: ensure application.yaml is correctly listed in .gitignore)
